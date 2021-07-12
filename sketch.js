@@ -1,4 +1,4 @@
-const serviceUuid = "19b10010-e8f2-537e-4f6c-d104768a1214";
+const serviceUuid = "2e19ea48-8245-b841-e453-75f384290548";
       let myCharacteristic;
       let myValue = 0;
       let myBLE;
