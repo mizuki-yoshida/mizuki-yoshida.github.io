@@ -1,45 +1,59 @@
 const serviceUuid = "2e19ea48-8245-b841-e453-75f384290548";
-      let myCharacteristic;
-      let myValue = 0;
-      let myBLE;
+let myBLE;
+let isConnected = false;
 
-      function setup() {
-        // Create a p5ble class
-        myBLE = new p5ble();
+function setup() {
+  // Create a p5ble class
+  myBLE = new p5ble();
 
-        createCanvas(200, 200);
-        textSize(20);
-        textAlign(CENTER, CENTER);
+  createCanvas(200, 200);
+  textSize(20);
+  textAlign(CENTER, CENTER);
 
-        // Create a 'Connect' button
-        const connectButton = createButton('Connect')
-        connectButton.mousePressed(connectToBle);
-      }
+  // Create a 'Connect' button
+  const connectButton = createButton('Connect')
+  connectButton.mousePressed(connectToBle);
 
-      function connectToBle() {
-        // Connect to a device by passing the service UUID
-        myBLE.connect(serviceUuid, gotCharacteristics);
-      }
+  // Create a 'Disconnect' button
+  const disconnectButton = createButton('Disconnect')
+  disconnectButton.mousePressed(disconnectToBle);
+}
 
-      // A function that will be called once got characteristics
-      function gotCharacteristics(error, characteristics) {
-        if (error) console.log('error: ', error);
-        console.log('characteristics: ', characteristics);
-        myCharacteristic = characteristics[0];
-        // Read the value of the first characteristic
-        myBLE.read(myCharacteristic, gotValue);
-      }
+function connectToBle() {
+  // Connect to a device by passing the service UUID
+  myBLE.connect(serviceUuid, gotCharacteristics);
+}
 
-      // A function that will be called once got values
-      function gotValue(error, value) {
-        if (error) console.log('error: ', error);
-        console.log('value: ', value);
-        myValue = value;
-        // After getting a value, call p5ble.read() again to get the value again
-        myBLE.read(myCharacteristic, gotValue);
-      }
+function disconnectToBle() {
+  // Disonnect to the device
+  myBLE.disconnect();
+  // Check if myBLE is connected
+  isConnected = myBLE.isConnected();
+}
 
-      function draw() {
-        background(250);
-        text(myValue, 100, 100);
-      }
+function onDisconnected() {
+  console.log('Device got disconnected.');
+  isConnected = false;
+}
+
+// A function that will be called once got characteristics
+function gotCharacteristics(error, characteristics) {
+  if (error) console.log('error: ', error);
+  console.log('characteristics: ', characteristics);
+
+  // Check if myBLE is connected
+  isConnected = myBLE.isConnected();
+
+  // Add a event handler when the device is disconnected
+  myBLE.onDisconnected(onDisconnected)
+}
+
+function draw() {
+  if (isConnected) {
+    background(0, 255, 0);
+    text('Connected!', 100, 100);
+  } else {
+    background(255, 0, 0);
+    text('Disconnected :/', 100, 100);
+  }
+}
