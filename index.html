@@ -75,11 +75,12 @@
     // handle incoming data:
     function handleData(event) {
         var buf = event.target.value.getUint8();;
-        console.log(buf);
+//         console.log(buf);
         var bd = document.getElementById("balldown");
-        var btop = -200;
-        var bwidth = 200;
+        
         if(all === false){
+            var btop = -200;
+            var bwidth = 200;
             if(buf >= 33){
             console.log(all);
             btop += buf * 10;
