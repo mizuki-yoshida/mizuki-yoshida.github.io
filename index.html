@@ -79,8 +79,8 @@
         var bd = document.getElementById("balldown");
         var btop = -200;
         var bwidth = 200;
-
-        if(buf >= 33 && all==false){
+        if(all == false){
+            if(buf >= 33){
             console.log(all);
             btop += buf * 10;
             bwidth += buf * 5;
@@ -88,17 +88,19 @@
             bd.style.width = bwidth + "px";
             bd.style.height = bwidth + "px";
             
-        }else if(buf >= 50){
+        }if(buf >= 50){
             all = true;
-            console.log(all);
-            bd.style.top ="0px";
-            bd.style.width = "100%";
-            bd.style.height = "100%";
         } else{
             bd.style.top = "-200px";
             bd.style.width = "200px";
             bd.style.height = "200px";
         }
+        }else{
+            bd.style.top = "0";
+            bd.style.width = "2000px";
+            bd.style.height = "2000px";
+        }
+        
 
 
         //draw elements
