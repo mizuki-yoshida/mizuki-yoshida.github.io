@@ -34,6 +34,8 @@
 <script>
 
     var myDevice;
+    var all = false;
+    
     function connect(){
         navigator.bluetooth.requestDevice(
         {filters: [{services: ['battery_service']}]})
@@ -78,13 +80,19 @@
         var btop = -200;
         var bwidth = 200;
 
-        if(buf >= 33){
+        if(buf >= 33 && !all){
             btop += buf * 10;
             bwidth += buf * 5;
             bd.style.top = btop + "px";
             bd.style.width = bwidth + "px";
             bd.style.height = bwidth + "px";
-        }else{
+            
+        }else if(buf >= 70){
+            all = true;
+             bd.style.top ="0px";
+            bd.style.width = "100%";
+            bd.style.height = "100%";
+        } else{
             bd.style.top = "-200px";
             bd.style.width = "200px";
             bd.style.height = "200px";
