@@ -80,7 +80,8 @@
         var btop = -200;
         var bwidth = 200;
 
-        if(buf >= 33 && !all){
+        if(buf >= 33 && all==false){
+            console.log(all);
             btop += buf * 10;
             bwidth += buf * 5;
             bd.style.top = btop + "px";
@@ -89,7 +90,8 @@
             
         }else if(buf >= 50){
             all = true;
-             bd.style.top ="0px";
+            console.log(all);
+            bd.style.top ="0px";
             bd.style.width = "100%";
             bd.style.height = "100%";
         } else{
