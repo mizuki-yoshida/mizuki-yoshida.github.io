@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en"><head>
+    <script src="p5.js"></script>
+    <script src="p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8">
+
+    <style>
+        *{margin: 0; padding: 0;}
+        body,html{width: 100%;  height: 100%;}
+        #base{width: 100%;  height: 100%; background-color: black; position: absolute; top:0; left:0; z-index: 0;}
+        #white{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:0; z-index: 1;}
+        #black{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:0; z-index: 2 ;}
+        
+        #balldown{background-color: white; position: absolute; top: -200px; left: 0; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        
+        #ballup{background-color: white; position: absolute; bottom: -200px; left: 0; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+    </style>
+
+  </head>
+  <body>
+
+    <div id="base">
+        <div id="white">
+            <div id="balldown"></div>
+        </div>
+        <div id="black">
+            <button onClick='connect()'>connect</button>
+            <button onClick='disconnect()'>disconnect</button>
+            <img src="https://github.com/mizuki-yoshida/mizuki-yoshida.github.io/raw/main/pngegg.png" alt="icon">
+        </div>
+    </div>
+
+
+
+
+<script>
+
+    var myDevice;
+    var all = false;
+    
+    function connect(){
+        navigator.bluetooth.requestDevice(
+        {filters: [{services: ['battery_service']}]})
+            .then(function(device) {
+                // save the device returned so you can disconnect later:
+                myDevice = device;
+                console.log(device);
+                // connect to the device once you find it:
+                return device.gatt.connect();
+            })
+            .then(function(server) {
+                // get the primary service:
+                return server.getPrimaryService('battery_service');
+            })
+            .then(function(service) {
+                // get the  characteristic:
+                return service.getCharacteristics('battery_level');
+            })
+            .then(function(characteristics) {
+                // subscribe to the characteristic:
+                for (c in characteristics) {
+                    characteristics[c].startNotifications()
+                        .then(subscribeToChanges);
+                }
+            })
+            .catch(function(error) {
+                // catch any errors:
+                console.error('Connection failed!', error);
+            });
+    }
+
+    // subscribe to changes from the meter:
+    function subscribeToChanges(characteristic) {
+        characteristic.oncharacteristicvaluechanged = handleData;
+    }
+
+    // handle incoming data:
+    function handleData(event) {
+        var buf = event.target.value.getUint8();;
+//         console.log(buf);
+        var bd = document.getElementById("balldown");
+        
+        if(all === false){
+            var btop = -200;
+            var bwidth = 200;
+            var rad = 200;
+            
+            if(buf >= 33){
+            console.log(all);
+            console.log(buf);
+            btop += buf * 10;
+            bwidth += buf * 5;
+            rad -= buf;
+                
+            bd.style.top = btop + "px";
+            bd.style.width = bwidth + "px";
+            bd.style.height = bwidth + "px";
+            bd.style.borderRadius =  rad + "px";
+            
+        }else{
+            bd.style.top = "-200px";
+            bd.style.width = "200px";
+            bd.style.height = "200px";
+             bd.style.borderRadius =  "200px";
+        }if(buf >= 55){
+            all = true;
+        } 
+        } if(all === true){
+            bd.style.top = "0";
+            bd.style.width = "2000px";
+            bd.style.height = "2000px";
+            bd.style.borderRadius = "0px";
+        }
+        
+
+
+        //draw elements
+    }
+
+    // disconnect function:
+    function disconnect() {
+        if (myDevice) {
+            // disconnect:
+            myDevice.gatt.disconnect();
+        }
+    }
+
+
+
+</script>
+
+</body></html>
