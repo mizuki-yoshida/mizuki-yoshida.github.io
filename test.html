@@ -21,7 +21,7 @@
 
     <div id="base">
         <div id="white">
-            <div id="balldown"></div>
+            <div id="balldown"><div id="ballup"></div>
         </div>
         <div id="black">
             <button onClick='connect()'>connect</button>
@@ -79,6 +79,7 @@
         var buf = event.target.value.getUint8();;
 //         console.log(buf);
         var bd = document.getElementById("balldown");
+        var bu = document.getElementById("ballup");
         
         if(all === false){
             var btop = -200;
@@ -96,12 +97,22 @@
             bd.style.width = bwidth + "px";
             bd.style.height = bwidth + "px";
             bd.style.borderRadius =  rad + "px";
+                
+            bu.style.top = btop + "px";
+            bu.style.width = bwidth + "px";
+            bu.style.height = bwidth + "px";
+            bu.style.borderRadius =  rad + "px";
             
         }else{
             bd.style.top = "-200px";
             bd.style.width = "200px";
             bd.style.height = "200px";
              bd.style.borderRadius =  "200px";
+            
+            bu.style.top = "-200px";
+            bu.style.width = "200px";
+            bu.style.height = "200px";
+             bu.style.borderRadius =  "200px";
         }if(buf >= 55){
             all = true;
         } 
@@ -110,6 +121,11 @@
             bd.style.width = "2000px";
             bd.style.height = "2000px";
             bd.style.borderRadius = "0px";
+            
+            bu.style.top = "0";
+            bu.style.width = "2000px";
+            bu.style.height = "2000px";
+            bu.style.borderRadius = "0px";
         }
         
 
