@@ -11,8 +11,8 @@
         #white{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:0; z-index: 1;}
         #black{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:0; z-index: 2 ;}
         
-        #balldown{background-color: white; position: absolute; top: -200px; left: 300px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
-        #ballup{background-color: white; position: absolute; bottom:-200px; left: 0; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #balldown{background-color: white; position: absolute; top: 1080px; left: 200px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #ballup{background-color: white; position: absolute; top: 1080px; right: 200px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
         
     </style>
 
@@ -30,7 +30,6 @@
             <img src="https://github.com/mizuki-yoshida/mizuki-yoshida.github.io/raw/main/pngegg.png" alt="icon">
         </div>
     </div>
-
 
 
 
@@ -83,8 +82,8 @@
         var bu = document.getElementById("ballup");
         
         if(all === false){
-            var btop = -200;
-            var bbottom = -200;
+            var bright = 200;
+            var bleft = 200;
             var bwidth = 200;
             var rad = 200;
             
@@ -96,23 +95,23 @@
             bwidth += buf * 5;
             rad -= buf;
                 
-            bd.style.top = btop + "px";
+            bd.style.top = bleft + "px";
             bd.style.width = bwidth + "px";
             bd.style.height = bwidth + "px";
             bd.style.borderRadius =  rad + "px";
                 
-            bu.style.bottom = btop + "px";
+            bu.style.bottom = bright + "px";
             bu.style.width = bwidth + "px";
             bu.style.height = bwidth + "px";
             bu.style.borderRadius =  rad + "px";
             
         }else{
-            bd.style.top = "-200px";
+            bd.style.left = "-200px";
             bd.style.width = "200px";
             bd.style.height = "200px";
              bd.style.borderRadius =  "200px";
             
-            bu.style.bottom = "-200px";
+            bu.style.right = "-200px";
             bu.style.width = "200px";
             bu.style.height = "200px";
              bu.style.borderRadius =  "200px";
@@ -120,12 +119,12 @@
             all = true;
         } 
         } if(all === true){
-            bd.style.top = "0";
+            bd.style.left = "0";
             bd.style.width = "2000px";
             bd.style.height = "2000px";
             bd.style.borderRadius = "0px";
             
-            bu.style.bottom = "0";
+            bu.style.right = "0";
             bu.style.width = "2000px";
             bu.style.height = "2000px";
             bu.style.borderRadius = "0px";
