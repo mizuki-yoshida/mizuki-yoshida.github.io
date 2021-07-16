@@ -11,8 +11,8 @@
         #white{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:0; z-index: 1;}
         #black{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:0; z-index: 2 ;}
         
-        #balldown{background-color: white; position: absolute; top: 1080px; left: 200px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
-        #ballup{background-color: white; position: absolute; top: 1080px; right: 200px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #balldown{background-color: white; position: absolute; top: 540px; left: 200px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #ballup{background-color: white; position: absolute; top: 5400px; right: 200px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
         
     </style>
 
@@ -95,23 +95,23 @@
             bwidth += buf * 5;
             rad -= buf;
                 
-            bd.style.top = bleft + "px";
+            bd.style.left = bleft + "px";
             bd.style.width = bwidth + "px";
             bd.style.height = bwidth + "px";
             bd.style.borderRadius =  rad + "px";
                 
-            bu.style.bottom = bright + "px";
+            bu.style.right = bright + "px";
             bu.style.width = bwidth + "px";
             bu.style.height = bwidth + "px";
             bu.style.borderRadius =  rad + "px";
             
         }else{
-            bd.style.left = "-200px";
+            bd.style.left = "200px";
             bd.style.width = "200px";
             bd.style.height = "200px";
              bd.style.borderRadius =  "200px";
             
-            bu.style.right = "-200px";
+            bu.style.right = "200px";
             bu.style.width = "200px";
             bu.style.height = "200px";
              bu.style.borderRadius =  "200px";
