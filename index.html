@@ -167,8 +167,8 @@
     function handleData2(event) {
         var buf = event.target.value.getUint8();
 //      
-        var bd = document.getElementById("balldown2");
-        var bu = document.getElementById("ballup2");
+        var bd2 = document.getElementById("balldown2");
+        var bu2 = document.getElementById("ballup2");
         
         if(all === false){
             var bright = 200;
@@ -184,26 +184,26 @@
             bwidth += buf * 5;
             rad -= buf;
                 
-             bd.style.left = bleft + "px";
-             bd.style.width = bwidth + "px";
-             bd.style.height = bwidth - "px";
-             bd.style.borderRadius =  rad + "px";
+             bd2.style.left = bleft + "px";
+             bd2.style.width = bwidth + "px";
+             bd2.style.height = bwidth + "px";
+             bd2.style.borderRadius =  rad + "px";
                 
-            bu.style.right = bright + "px";
-            bu.style.width = bwidth + "px";
-            bu.style.height = bwidth - "px";
-            bu.style.borderRadius =  rad + "px";
+            bu2.style.right = bright + "px";
+            bu2.style.width = bwidth + "px";
+            bu2.style.height = bwidth + "px";
+            bu2.style.borderRadius =  rad + "px";
             
         }else{
-             bd.style.left = "200px";
-             bd.style.width = "200px";
-             bd.style.height = "200px";
-              bd.style.borderRadius =  "200px";
+             bd2.style.left = "200px";
+             bd2.style.width = "200px";
+             bd2.style.height = "200px";
+             bd2.style.borderRadius =  "200px";
             
-            bu.style.right = "200px";
-            bu.style.width = "200px";
-            bu.style.height = "200px";
-             bu.style.borderRadius =  "200px";
+            bu2.style.right = "200px";
+            bu2.style.width = "200px";
+            bu2.style.height = "200px";
+            bu2.style.borderRadius =  "200px";
         }if(buf >= 60){
             all = true;
         } 
