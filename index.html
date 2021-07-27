@@ -65,8 +65,10 @@
             })
             .then(function(characteristics) {
                 // subscribe to the characteristic:
+                var i = 0;
                 for (c in characteristics) {
-                    console.log(c);
+                    console.log("characteristic: " + i + "value: " + c);
+                    i ++;
                     characteristics[c].startNotifications()
                         .then(subscribeToChanges);
                 }
