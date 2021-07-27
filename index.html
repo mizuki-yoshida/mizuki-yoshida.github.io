@@ -60,7 +60,8 @@
             })
             .then(function(service) {
                 // get the  characteristic:
-                return service.getCharacteristics('battery_level');
+                //return service.getCharacteristics('battery_level');
+                return service.getCharacteristics();
             })
             .then(function(characteristics) {
                 // subscribe to the characteristic:
