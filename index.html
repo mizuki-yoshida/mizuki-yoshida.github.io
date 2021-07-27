@@ -67,10 +67,18 @@
                 // subscribe to the characteristic:
                 var i = 0;
                 for (c in characteristics) {
-                    console.log("characteristic: " + i + "value: " + c);
-                    i ++;
+                    console.log("characteristic: " + i + " value: " + c);
+                    if(i == 0){
                     characteristics[c].startNotifications()
-                        .then(subscribeToChanges);
+                        .then(subscribeToChanges1);
+                    }else{
+                        characteristics[c].startNotifications()
+                        .then(subscribeToChanges2);
+                    }
+                    
+                    
+                    i ++;
+                    
                 }
             })
             .catch(function(error) {
@@ -80,16 +88,20 @@
     }
 
     // subscribe to changes from the meter:
-    function subscribeToChanges(characteristic) {
-        characteristic.oncharacteristicvaluechanged = handleData;
+    function subscribeToChanges1(characteristic) {
+        characteristic.oncharacteristicvaluechanged = handleData1;
+    }
+    
+    function subscribeToChanges2(characteristic) {
+        characteristic.oncharacteristicvaluechanged = handleData2;
     }
 
     // handle incoming data:
-    function handleData(event) {
+    function handleData1(event) {
         var buf = event.target.value.getUint8();
 //      
         var bd = document.getElementById("balldown");
-        var bu = document.getElementById("ballup");
+        //var bu = document.getElementById("ballup");
         
         if(all === false){
             var bright = 200;
@@ -110,16 +122,79 @@
             bd.style.height = bwidth + "px";
             bd.style.borderRadius =  rad + "px";
                 
-            bu.style.right = bright + "px";
-            bu.style.width = bwidth + "px";
-            bu.style.height = bwidth + "px";
-            bu.style.borderRadius =  rad + "px";
+            //bu.style.right = bright + "px";
+            //bu.style.width = bwidth + "px";
+            //bu.style.height = bwidth + "px";
+            //bu.style.borderRadius =  rad + "px";
             
         }else{
             bd.style.left = "200px";
             bd.style.width = "200px";
             bd.style.height = "200px";
              bd.style.borderRadius =  "200px";
+            
+            //bu.style.right = "200px";
+            //bu.style.width = "200px";
+            //bu.style.height = "200px";
+             //bu.style.borderRadius =  "200px";
+        }if(buf >= 60){
+            all = true;
+        } 
+        } if(all === true){
+            bd.style.left = "0";
+            bd.style.width = "2000px";
+            bd.style.height = "2000px";
+            bd.style.borderRadius = "0px";
+            
+            //bu.style.right = "0";
+            //bu.style.width = "2000px";
+            //bu.style.height = "2000px";
+            //bu.style.borderRadius = "0px";
+        }
+        
+
+
+        //draw elements
+    }
+    
+    
+    ///////
+    
+    function handleData2(event) {
+        var buf = event.target.value.getUint8();
+//      
+        //var bd = document.getElementById("balldown");
+        var bu = document.getElementById("ballup");
+        
+        if(all === false){
+            var bright = 200;
+            var bleft = 200;
+            var bwidth = 200;
+            var rad = 200;
+            
+            if(buf >= 40){
+            console.log(all);
+            console.log(buf);
+            bleft += buf * 10;
+            bright += buf * 10;
+            bwidth += buf * 5;
+            rad -= buf;
+                
+//             bd.style.left = bleft + "px";
+//             bd.style.width = bwidth + "px";
+//             bd.style.height = bwidth + "px";
+//             bd.style.borderRadius =  rad + "px";
+                
+            bu.style.right = bright + "px";
+            bu.style.width = bwidth + "px";
+            bu.style.height = bwidth + "px";
+            bu.style.borderRadius =  rad + "px";
+            
+        }else{
+//             bd.style.left = "200px";
+//             bd.style.width = "200px";
+//             bd.style.height = "200px";
+//              bd.style.borderRadius =  "200px";
             
             bu.style.right = "200px";
             bu.style.width = "200px";
@@ -129,10 +204,10 @@
             all = true;
         } 
         } if(all === true){
-            bd.style.left = "0";
-            bd.style.width = "2000px";
-            bd.style.height = "2000px";
-            bd.style.borderRadius = "0px";
+//             bd.style.left = "0";
+//             bd.style.width = "2000px";
+//             bd.style.height = "2000px";
+//             bd.style.borderRadius = "0px";
             
             bu.style.right = "0";
             bu.style.width = "2000px";
