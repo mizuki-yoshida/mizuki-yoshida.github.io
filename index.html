@@ -165,7 +165,7 @@
     ///////
     
     function handleData2(event) {
-        var buf2 = event.target.value.getUint8();
+        var buf = event.target.value.getUint8();
 //      
         var bd2 = document.getElementById("balldown2");
         var bu2 = document.getElementById("ballup2");
@@ -176,13 +176,13 @@
             var bwidth = 200;
             var rad = 200;
             
-            if(buf2 >= 40){
+            if(buf >= 40){
             console.log(all);
             console.log(buf);
-            bleft += buf2 * 10;
-            bright += buf2 * 10;
-            bwidth += buf2 * 5;
-            rad += buf2;
+            bleft += buf * 10;
+            bright += buf * 10;
+            bwidth += buf * 5;
+            rad += buf;
                 
              bd2.style.left = bleft + "px";
              bd2.style.width = bwidth + "px";
@@ -204,19 +204,19 @@
             bu2.style.width = "200px";
             bu2.style.height = "200px";
             bu2.style.borderRadius =  "200px";
-        }if(buf2 >= 60){
+        }if(buf >= 60){
             all = true;
         } 
         } if(all === true){
-             bd.style.left = "0";
-             bd.style.width = "2000px";
-             bd.style.height = "2000px";
-             bd.style.borderRadius = "0px";
+             bd2.style.left = "0";
+             bd2.style.width = "2000px";
+             bd2.style.height = "2000px";
+             bd2.style.borderRadius = "0px";
             
-            bu.style.right = "0";
-            bu.style.width = "2000px";
-            bu.style.height = "2000px";
-            bu.style.borderRadius = "0px";
+            bu2.style.right = "0";
+            bu2.style.width = "2000px";
+            bu2.style.height = "2000px";
+            bu2.style.borderRadius = "0px";
         }
         
 
