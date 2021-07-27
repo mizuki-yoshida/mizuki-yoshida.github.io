@@ -165,7 +165,7 @@
     ///////
     
     function handleData2(event) {
-        var buf = event.target.value.getUint8();
+        var buf2 = event.target.value.getUint8();
 //      
         var bd2 = document.getElementById("balldown2");
         var bu2 = document.getElementById("ballup2");
@@ -179,10 +179,10 @@
             if(buf >= 40){
             console.log(all);
             console.log(buf);
-            bleft += buf * 10;
-            bright += buf * 10;
-            bwidth += buf * 5;
-            rad += buf;
+            bleft += buf2 * 10;
+            bright += buf2 * 10;
+            bwidth += buf2 * 5;
+            rad += buf2;
                 
              bd2.style.left = bleft + "px";
              bd2.style.width = bwidth + "px";
