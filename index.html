@@ -65,6 +65,7 @@
             .then(function(characteristics) {
                 // subscribe to the characteristic:
                 for (c in characteristics) {
+                    console.log(c);
                     characteristics[c].startNotifications()
                         .then(subscribeToChanges);
                 }
@@ -82,8 +83,8 @@
 
     // handle incoming data:
     function handleData(event) {
-        var buf = event.target.value.getUint8();;
-//         console.log(buf);
+        var buf = event.target.value.getUint8();
+//      
         var bd = document.getElementById("balldown");
         var bu = document.getElementById("ballup");
         
