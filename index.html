@@ -46,7 +46,8 @@
 <script>
 
     var myDevice;
-    var all = false;
+    var all1 = false;
+    var all2 = false;
     
     function connect(){
         navigator.bluetooth.requestDevice(
@@ -107,7 +108,7 @@
         var bd = document.getElementById("balldown");
         var bu = document.getElementById("ballup");
         
-        if(all === false){
+        if(all1 === false){
             var bright = 200;
             var bleft = 200;
             var bwidth = 200;
@@ -142,9 +143,9 @@
             bu.style.height = "200px";
             bu.style.borderRadius =  "200px";
         }if(buf >= 60){
-            all = true;
+            all1 = true;
         } 
-        } if(all === true){
+        } if(all1 === true){
             bd.style.left = "0";
             bd.style.width = "2000px";
             bd.style.height = "2000px";
@@ -175,7 +176,7 @@
         console.log(bd);
         console.log(bu);
         
-        if(all === false){
+        if(all2 === false){
             var bright = 200;
             var bleft = 200;
             var bwidth = 200;
@@ -210,18 +211,21 @@
             bu.style.height = "200px";
             bu.style.borderRadius =  "200px";
         }if(buf >= 60){
-            all = true;
+            all2 = true;
         } 
-        } if(all === true){
+        } if(all2 === true){
             bd.style.left = "0";
             bd.style.width = "2000px";
             bd.style.height = "2000px";
             bd.style.borderRadius = "0px";
+            bd.style.bottom = "0";
+            
             
             bu.style.right = "0";
             bu.style.width = "2000px";
             bu.style.height = "2000px";
             bu.style.borderRadius = "0px";
+            bu.style.bottom = "0";
         }
         
 
