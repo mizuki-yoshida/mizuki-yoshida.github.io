@@ -76,6 +76,7 @@
             .then(function(service) {
                 // get the  characteristic:
                 //return service.getCharacteristics('battery_level');
+                console.log(service.getCharacteristics());
                 return service.getCharacteristics();
             })
             .then(function(characteristics) {
