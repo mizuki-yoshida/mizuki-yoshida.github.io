@@ -82,7 +82,7 @@
 
 //                 mizukiservice = [service, service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb')];
             
-                return service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb');
+                return service.getCharacteristics();
             })
             .then(function(characteristic) {          
                 console.log(characteristic);
