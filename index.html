@@ -78,15 +78,17 @@
                 //return service.getCharacteristics('battery_level');
                 
                 console.log(service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb'));
+                mizukiservice = [service, service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb')];
             
-                return service.getCharacteristics();
+                return mizukiservice;
             })
-            .then(function(characteristics) {
+            .then(function(mizukiservice) {
+                mizukiservice[1][0].startNotifications().then(subscribeToChanges1)
                 // subscribe to the characteristic:
-                var i = 0;
-                characteristics[0].startNotifications().then(subscribeToChanges1).then(
-                characteristics[1].startNotifications().then(subscribeToChanges2)
-                );
+//                 var i = 0;
+//                 characteristics[0].startNotifications().then(subscribeToChanges1).then(
+//                 characteristics[1].startNotifications().then(subscribeToChanges2)
+//                 );
                 
             
                 
@@ -104,6 +106,13 @@
 //                     i ++;
                     
 //                 }
+                return mizukiservice
+            }).then(function(service) {
+                
+            
+                return mizukiservice[0].getCharacteristics('00002a20-0000-1000-8000-00805f9b34fb');
+            }).then(function(characteristic) {
+               characteristic[0].startNotifications().then(subscribeToChanges2)
             })
             .catch(function(error) {
                 // catch any errors:
