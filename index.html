@@ -82,9 +82,13 @@
 
 //                 mizukiservice = [service, service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb')];
             
-                return service, service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb');
+                return [service, service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb')];
             })
-            .then(function(service, characteristic) {
+            .then(function(list) {
+                console.log(list);
+                service = list[0];
+                characteristic = list[1];
+                console.log(characteristic);
                 characteristic[0].startNotifications().then(subscribeToChanges1);
                 // subscribe to the characteristic:
 //                 var i = 0;
