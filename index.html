@@ -112,11 +112,14 @@
     // subscribe to changes from the meter:
     function subscribeToChanges1(characteristic) {
         console.log("handle1");
+        console.log(characteristic);
         characteristic.oncharacteristicvaluechanged = handleData1;
     }
     
     function subscribeToChanges2(characteristic) {
         console.log("handle2");
+        console.log(characteristic);
+
         characteristic.oncharacteristicvaluechanged = handleData2;
     }
 
