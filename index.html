@@ -116,9 +116,9 @@
         characteristic.oncharacteristicvaluechanged = handleData1;
     }
     
-    function subscribeToChanges2(characteristic.uuid) {
+    function subscribeToChanges2(characteristic) {
         console.log("handle2");
-        console.log(characteristic);
+        console.log(characteristic.uuid);
 
         characteristic.oncharacteristicvaluechanged = handleData2;
     }
