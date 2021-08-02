@@ -124,7 +124,7 @@
     }
 
     // handle incoming data:
-    function handleData1(event) {
+    async function handleData1(event) {
         console.log("handle1 start");
         var buf = event.target.value.getUint8();
 //      
@@ -188,7 +188,7 @@
     
     ///////
     
-    function handleData2(event) {
+    async function handleData2(event) {
         console.log("handle2 start");
         var buf = event.target.value.getUint8();
         console.log("buf " + buf);
