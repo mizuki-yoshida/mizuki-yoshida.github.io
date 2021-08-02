@@ -114,7 +114,7 @@
 //                 }
                 return service
             }).then(function(service) {
-               
+                console.log(service.getCharacteristics('00002a20-0000-1000-8000-00805f9b34fb'));
                 return service.getCharacteristics('00002a20-0000-1000-8000-00805f9b34fb');
             }).then(function(characteristic) {
                characteristic[0].startNotifications().then(subscribeToChanges2)
