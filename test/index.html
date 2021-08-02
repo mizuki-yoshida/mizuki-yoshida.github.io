@@ -1,0 +1,259 @@
+!DOCTYPE html><html lang="en"><head>
+    <script src="p5.js"></script>
+    <script src="p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8">
+
+    <style>
+        *{margin: 0; padding: 0;}
+        body,html{width: 100%;  height: 100%;}
+        #base{width:  100%;  height: 100%; background-color: #1A274C; position: absolute; top:0; left:0; width:1000px; height:1850px;z-index: 0;}
+        #white{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:0; z-index: 1;}
+        #black{width: 100%;  height: 100%; background-color: transparent; position: absolute; top:0; left:400px; z-index: 2 ;}
+        
+        #balldown{background-color: white; position: absolute; top: 0px; left: 100px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #ballup{background-color: white; position: absolute; top: 0px; right: 100px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #balldown2{background-color: white; position: absolute; bottom: 100px; left: 100px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #ballup2{background-color: white; position: absolute; bottom: 100px; right: 100px; width: 200px; height: 200px; border-radius: 200px; transition: all ease 0.5s;}
+        #lefteyelid{animation: flash 1s linear infinite; position: absolute; top: 200px; left: -130px; width:160px; height:160px;border-radius: 160px; background:transparent; margin:160px;}
+@keyframes flash {0%,50%,100%{opacity: 0;}35%{opacity: 1; background:#1A274C;} 65%{opacity: 1;background:transparent;}}
+        #righteyelid{animation: flash 1s linear infinite; position: absolute; top: 20px; left: -130px; width:160px; height:160px;border-radius: 160px; background:transparent; margin:160px;}
+@keyframes flash {0%,50%,100%{opacity: 0;}35%{opacity: 1; background:#1A274C;} 65%{opacity: 1;background:transparent;}}
+        #lefteyelid2{animation: flash 1s linear infinite; position: absolute; top: 1165px; left: -130px; width:160px; height:160px;border-radius: 160px; background:transparent; margin:160px;}
+@keyframes flash {0%,50%,100%{opacity: 0;}35%{opacity: 1; background:#1A274C;} 65%{opacity: 1;background:transparent;}}
+        #righteyelid2{animation: flash 1s linear infinite; position: absolute; top: 985px; left: -130px; width:160px; height:160px;border-radius: 160px; background:transparent; margin:160px;}
+@keyframes flash {0%,50%,100%{opacity: 0;}35%{opacity: 1; background:#1A274C;} 65%{opacity: 1;background:transparent;}}
+       
+        
+    </style>
+
+  </head>
+  <body>
+
+    <div id="base">
+        <div id="white">
+            <div id="balldown"></div>
+            <div id="ballup"></div>
+            <div id="balldown2"></div>
+            <div id="ballup2"></div>
+        </div>
+        <div id="black">
+            <button onClick='connect()'>connect</button>
+            <button onClick='disconnect()'>disconnect</button>
+            <div style="　position:relative; top: 0px; left: 700px;">
+            <img src="https://github.com/mizuki-yoshida/mizuki-yoshida.github.io/raw/main/LOOK_LEFT_2.png"　 width="218px" height="690px" alt="icon"></div>
+             <div style="　position:absolute; top: 500px; left: 0px;">   
+            <img src="https://github.com/mizuki-yoshida/mizuki-yoshida.github.io/raw/main/LOOK_RIGHT3.png" width="218px" height="975px" alt="icon2"></div>
+            <div id="lefteyelid"></div>
+            <div id="righteyelid"></div>
+            <div id="lefteyelid2"></div>
+            <div id="righteyelid2"></div>
+        </div>
+    </div>
+
+
+
+<script>
+
+    var myDevice;
+    var all1 = false;
+    var all2 = false;
+    
+    function connect(){
+        navigator.bluetooth.requestDevice(
+        {filters: [{services: ['battery_service']}]})
+            .then(function(device) {
+                // save the device returned so you can disconnect later:
+                myDevice = device;
+                console.log(device);
+                // connect to the device once you find it:
+                return device.gatt.connect();
+            })
+            .then(function(server) {
+                // get the primary service:
+                return server.getPrimaryService('battery_service');
+            })
+            .then(function(service) {
+                // get the  characteristic:
+                //return service.getCharacteristics('battery_level');
+                console.log(service.getCharacteristics());
+                return service.getCharacteristics();
+            })
+            .then(function(characteristics) {
+                // subscribe to the characteristic:
+                var i = 0;
+                for (c in characteristics) {
+                    console.log("characteristic: " + i + " value: " + c);
+                    if(i == 0){
+                    characteristics[c].startNotifications()
+                        .then(subscribeToChanges1);
+                    }else{
+                        characteristics[c].startNotifications()
+                        .then(subscribeToChanges2);
+                    }
+                    
+                    
+                    i ++;
+                    
+                }
+            })
+            .catch(function(error) {
+                // catch any errors:
+                console.error('Connection failed!', error);
+            });
+    }
+
+    // subscribe to changes from the meter:
+    function subscribeToChanges1(characteristic) {
+        characteristic.oncharacteristicvaluechanged = handleData1;
+    }
+    
+    function subscribeToChanges2(characteristic) {
+        characteristic.oncharacteristicvaluechanged = handleData2;
+    }
+
+    // handle incoming data:
+    function handleData1(event) {
+        var buf = event.target.value.getUint8();
+//      
+        var bd = document.getElementById("balldown");
+        var bu = document.getElementById("ballup");
+        
+        if(all1 === false){
+            var bright = 200;
+            var bleft = 200;
+            var bwidth = 200;
+            var rad = 200;
+            
+            if(buf >= 40){
+            console.log(all1);
+            console.log(buf);
+            bleft += buf * 10;
+            bright += buf * 10;
+            bwidth += buf * 5;
+            rad -= buf;
+                
+            bd.style.left = bleft + "px";
+            bd.style.width = bwidth + "px";
+            bd.style.height = bwidth + "px";
+            bd.style.borderRadius =  rad + "px";
+                
+            bu.style.right = bright + "px";
+            bu.style.width = bwidth + "px";
+            bu.style.height = bwidth + "px";
+            bu.style.borderRadius =  rad + "px";
+            
+        }else{
+            bd.style.left = "200px";
+            bd.style.width = "200px";
+            bd.style.height = "200px";
+             bd.style.borderRadius =  "200px";
+            
+            bu.style.right = "200px";
+            bu.style.width = "200px";
+            bu.style.height = "200px";
+            bu.style.borderRadius =  "200px";
+        }if(buf >= 50){
+            all1 = true;
+        } 
+        } if(all1 === true){
+            bd.style.left = "0";
+            bd.style.width = "2000px";
+            bd.style.height = "1000px";
+            bd.style.borderRadius = "0px";
+            
+            bu.style.right = "0";
+            bu.style.width = "2000px";
+            bu.style.height = "1000px";
+            bu.style.borderRadius = "0px";
+        }
+        
+
+
+        //draw elements
+    }
+    
+    
+    ///////
+    
+    function handleData2(event) {
+        var buf = event.target.value.getUint8();
+        console.log("buf " + buf);
+        
+//      
+        var bd = document.getElementById("balldown2");
+        var bu = document.getElementById("ballup2");
+        
+        console.log(bd);
+        console.log(bu);
+        
+        if(all2 === false){
+            var bright = 200;
+            var bleft = 200;
+            var bwidth = 200;
+            var rad = 200;
+            
+            if(buf >= 40){
+            console.log(all2);
+            console.log(buf);
+            bleft += buf * 10;
+            bright += buf * 10;
+            bwidth += buf * 5;
+            rad -= buf;
+                
+            bd.style.left = bleft + "px";
+            bd.style.width = bwidth + "px";
+            bd.style.height = bwidth + "px";
+            bd.style.borderRadius =  rad + "px";
+                
+            bu.style.right = bright + "px";
+            bu.style.width = bwidth + "px";
+            bu.style.height = bwidth + "px";
+            bu.style.borderRadius =  rad + "px";
+            
+        }else{
+            bd.style.left = "200px";
+            bd.style.width = "200px";
+            bd.style.height = "200px";
+             bd.style.borderRadius =  "200px";
+            
+            bu.style.right = "200px";
+            bu.style.width = "200px";
+            bu.style.height = "200px";
+            bu.style.borderRadius =  "200px";
+        }if(buf >= 50){
+            all2 = true;
+        } 
+        } if(all2 === true){
+            bd.style.left = "0";
+            bd.style.width = "2000px";
+            bd.style.height = "1000px";
+            bd.style.borderRadius = "0px";
+            bd.style.bottom = "0";
+            
+            
+            bu.style.right = "0";
+            bu.style.width = "2000px";
+            bu.style.height = "1000px";
+            bu.style.borderRadius = "0px";
+            bu.style.bottom = "0";
+        }
+        
+
+
+        //draw elements
+    }
+
+    // disconnect function:
+    function disconnect() {
+        if (myDevice) {
+            // disconnect:
+            myDevice.gatt.disconnect();
+        }
+    }
+
+
+
+</script>
+
+</body></html>
