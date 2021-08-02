@@ -85,7 +85,7 @@
                 return service, service.getCharacteristics('00002a19-0000-1000-8000-00805f9b34fb');
             })
             .then(function(service, characteristic) {
-                characteristic.startNotifications().then(subscribeToChanges1);
+                characteristic[0].startNotifications().then(subscribeToChanges1);
                 // subscribe to the characteristic:
 //                 var i = 0;
 //                 characteristics[0].startNotifications().then(subscribeToChanges1).then(
